@@ -9,7 +9,7 @@ import StreamShow from "./components/streams/streamShow";
 
  
 function App() {
-  return (    
+  return (     
     <div className="App ui container"> 
       <BrowserRouter>
       <Header /> 
