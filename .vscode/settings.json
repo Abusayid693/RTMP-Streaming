@@ -30,5 +30,6 @@
     "editor.codeActionsOnSave": {
         "source.fixAll.eslint": true,
         "source.organizeImports": true
-    }
+    },
+    "git.ignoreLimitWarning": true
 }

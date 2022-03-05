@@ -1,23 +1,51 @@
 import React from 'react';
-import { Field, InjectedFormProps, reduxForm } from 'redux-form';
+import { Field, FormErrors, InjectedFormProps, reduxForm } from 'redux-form';
+
+interface Iform {
+  title?: string;
+  description?: string;
+}
 
 class StreamCreate extends React.Component<
   InjectedFormProps<{}, {}, string>,
   any
 > {
-  renderInput(formProps: any) {
+  renderError(meta: any) {
+    const {touched, error} = meta;
+    if (touched && error) {
+      return (
+        <div className="ui error message">
+          <div className="header">{error}</div>
+        </div>
+      );
+    }
+    return null;
+  }
+
+  renderInput = (formProps: any) => {
+    const className = `field ${
+      formProps.meta.error && formProps.meta.touched ? 'error' : ''
+    }`;
     return (
-      <div className="field">
+      <div className={className}>
         <label>{formProps.label}</label>
         <input {...formProps.input} />
+        {this.renderError(formProps.meta)}
       </div>
     );
+  };
+
+  handleFormSubmit(formProps: any) {
+    console.log(formProps);
   }
 
   render() {
     console.log(this.props);
     return (
-      <form className='ui form'>
+      <form
+        onSubmit={this.props.handleSubmit(this.handleFormSubmit)}
+        className="ui form error"
+      >
         <Field
           name="title"
           component={this.renderInput}
@@ -28,11 +56,23 @@ class StreamCreate extends React.Component<
           component={this.renderInput}
           label={'Enter Description'}
         />
+        <button className="ui button primary">Submit</button>
       </form>
     );
   }
 }
 
+const validate = (values: Iform): FormErrors<Iform> => {
+  const errors: Iform = {};
+  if (!values.title) {
+    errors.title = 'title is necessary';
+  } else if (!values.description) {
+    errors.description = 'description is necessary';
+  }
+  return errors;
+};
+
 export default reduxForm({
   form: 'streamCreate',
+  validate,
 })(StreamCreate);
