@@ -1,21 +1,23 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import { Link } from 'react-router-dom';
 import { fetchStreams } from '../../actions/index';
 
 class StreamList extends React.Component<{
   fetchStreams: any;
   data: any;
   userId: string;
+  isSignedIn: boolean;
 }> {
   componentDidMount() {
     this.props.fetchStreams();
   }
 
-  adminControls() {
+  adminControls(id:number) {
     return (
       <div className="right floated content">
-        <button className="ui button primary">Edit</button>
-        <button className="ui button negative">Delete</button>
+        <Link to={`/streams/edit/${id}`} className="ui button primary">Edit</Link>
+        <Link to={`/streams/delete/${id}`}  className="ui button negative">Delete</Link>
       </div>
     );
   }
@@ -24,7 +26,7 @@ class StreamList extends React.Component<{
     return this.props.data.map((item: any) => {
       return (
         <div className="item" key={item.id}>
-          {this.props.userId === item.userId && this.adminControls()}
+          {this.props.userId === item.userId && this.adminControls(item.id)}
           <i className="large middle aligned icon camera" />
           <div className="content">
             {item.title}
@@ -35,18 +37,33 @@ class StreamList extends React.Component<{
     });
   }
 
+  createStream() {
+    return (
+      <div>
+        <Link to="streams/new" className="ui button primary">
+          Create Stream
+        </Link>
+      </div>
+    );
+  }
+
   render() {
     return (
       <div>
         <h2>Streams</h2>
         <div className="ui celled list">{this.renderListItems()}</div>
+        {this.createStream()}
       </div>
     );
   }
 }
 
 const mapStateToProps = (state: any) => {
-  return {data: Object.values(state.stream), userId: state.auth.userId};
+  return {
+    data: Object.values(state.stream),
+    userId: state.auth.userId,
+    isSignedIn: state.auth.isSignedIn,
+  };
 };
 
 export default connect(mapStateToProps, {fetchStreams})(StreamList);

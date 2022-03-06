@@ -1,5 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import { useNavigate } from 'react-router';
 import { Field, FormErrors, InjectedFormProps, reduxForm } from 'redux-form';
 import { createStream } from '../../actions';
 
@@ -8,11 +9,14 @@ interface Iform {
   description?: string;
 }
 
-class StreamCreate extends React.Component<
-  InjectedFormProps<{}, {}, string>,
-  any
-> {
-  renderError(meta: any) {
+interface IStreamCreate extends InjectedFormProps<{}, {}, string> {
+  createStream: typeof createStream;
+}
+
+const StreamCreate = ({createStream, handleSubmit}: IStreamCreate) => {
+  const navigation = useNavigate();
+
+  const renderError = (meta: any) => {
     const {touched, error} = meta;
     if (touched && error) {
       return (
@@ -22,9 +26,9 @@ class StreamCreate extends React.Component<
       );
     }
     return null;
-  }
+  };
 
-  renderInput = (formProps: any) => {
+  const renderInput = (formProps: any) => {
     const className = `field ${
       formProps.meta.error && formProps.meta.touched ? 'error' : ''
     }`;
@@ -32,38 +36,27 @@ class StreamCreate extends React.Component<
       <div className={className}>
         <label>{formProps.label}</label>
         <input {...formProps.input} />
-        {this.renderError(formProps.meta)}
+        {renderError(formProps.meta)}
       </div>
     );
   };
 
-  handleFormSubmit = (formProps: any)=>  {
-    // @ts-ignore
-    this.props.createStream(formProps);
-  }
-
-  render() {
-    console.log(this.props);
-    return (
-      <form
-        onSubmit={this.props.handleSubmit(this.handleFormSubmit)}
-        className="ui form error"
-      >
-        <Field
-          name="title"
-          component={this.renderInput}
-          label={'Enter Title'}
-        />
-        <Field
-          name="description"
-          component={this.renderInput}
-          label={'Enter Description'}
-        />
-        <button className="ui button primary">Submit</button>
-      </form>
-    );
-  }
-}
+  const handleFormSubmit = async (formProps: any) => {
+    await createStream(formProps);
+    navigation('/');
+  };
+  return (
+    <form onSubmit={handleSubmit(handleFormSubmit)} className="ui form error">
+      <Field name="title" component={renderInput} label={'Enter Title'} />
+      <Field
+        name="description"
+        component={renderInput}
+        label={'Enter Description'}
+      />
+      <button className="ui button primary">Submit</button>
+    </form>
+  );
+};
 
 const validate = (values: Iform): FormErrors<Iform> => {
   const errors: Iform = {};
@@ -78,6 +71,7 @@ const validate = (values: Iform): FormErrors<Iform> => {
 const formWrapped = reduxForm({
   form: 'streamCreate',
   validate,
+  // @ts-ignore
 })(StreamCreate);
 
 export default connect(null, {createStream})(formWrapped);
