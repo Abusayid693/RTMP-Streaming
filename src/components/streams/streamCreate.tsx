@@ -1,5 +1,7 @@
 import React from 'react';
+import { connect } from 'react-redux';
 import { Field, FormErrors, InjectedFormProps, reduxForm } from 'redux-form';
+import { createStream } from '../../actions';
 
 interface Iform {
   title?: string;
@@ -35,8 +37,9 @@ class StreamCreate extends React.Component<
     );
   };
 
-  handleFormSubmit(formProps: any) {
-    console.log(formProps);
+  handleFormSubmit = (formProps: any)=>  {
+    // @ts-ignore
+    this.props.createStream(formProps);
   }
 
   render() {
@@ -72,7 +75,9 @@ const validate = (values: Iform): FormErrors<Iform> => {
   return errors;
 };
 
-export default reduxForm({
+const formWrapped = reduxForm({
   form: 'streamCreate',
   validate,
 })(StreamCreate);
+
+export default connect(null, {createStream})(formWrapped);
