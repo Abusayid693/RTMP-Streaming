@@ -1,9 +1,16 @@
 {
   "streams": [
     {
-      "title": "dsds",
-      "description": "dads",
+      "title": "Testing stream",
+      "description": "we are creating new stream",
+      "userId": null,
       "id": 1
+    },
+    {
+      "title": "This is 2nd testing stream",
+      "description": "we are creating new stream",
+      "userId": "100879487765771195928",
+      "id": 2
     }
   ]
 }
