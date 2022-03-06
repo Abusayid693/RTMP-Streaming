@@ -18,7 +18,7 @@ function App() {
         <Route path={"/streams/edit"} element={<StreamEdit/>} />
         <Route path={"/streams/delete"} element={<StreamDelete/>} />
         <Route path={"/streams/show"} element={<StreamShow/>} />
-        <Route path={"/"} element={StreamList} />
+        <Route path={"/"} element={<StreamList/>} />
         </Routes>
       </BrowserRouter>
     </div>

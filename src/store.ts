@@ -9,4 +9,5 @@ export const store = createStore(reducers, composeEnhancers(applyMiddleware(redu
 
 export const useThunkDispatch = () => useDispatch<typeof store.dispatch>();
 
-export type Idispatch = typeof store.dispatch;
+export type IDispatch = typeof store.dispatch;
+export type IState = typeof store.getState;
