@@ -1,14 +1,23 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { useNavigate } from 'react-router';
 
-const Model = (props: any) => {
-  const navigation = useNavigate();
-
-  const handleOffSetClick = (e: any) => {
-    navigation('/');
-  };
-
+const Model: React.FC<{
+  title: string;
+  content: string;
+  actionsForward: any;
+  actionsForwardContent: string;
+  actionsCancel: any;
+  actionsCancelContent: string;
+  handleOffSetClick: any;
+}> = ({
+  title,
+  content,
+  actionsForward,
+  actionsForwardContent,
+  actionsCancelContent,
+  actionsCancel,
+  handleOffSetClick,
+}) => {
   return ReactDOM.createPortal(
     <div
       className="ui dimmer modals visible active"
@@ -18,11 +27,15 @@ const Model = (props: any) => {
         className="ui standard modal visible active"
         onClick={(e: any) => e.stopPropagation()}
       >
-        <div className="header">Delete Stream</div>
-        <div className="content">Are you sure you want to delete?</div>
+        <div className="header">{title}</div>
+        <div className="content">{content}</div>
         <div className="actions">
-          <button className="ui primary button">Delete</button>
-          <button className="ui button">Cancel</button>
+          <button className="ui primary button" onClick={actionsForward}>
+            {actionsForwardContent}
+          </button>
+          <button className="ui button" onClick={actionsCancel}>
+            {actionsCancelContent}
+          </button>
         </div>
       </div>
     </div>,
