@@ -19,7 +19,7 @@ const StreamDelete = (props: any) => {
           content = 'Are you sure you want to delete ?'
           actionsForward={()=>alert('')}
           actionsForwardContent="Delete"
-          actionsCancel={()=> alert('')}
+          actionsCancel={handleOffSetClick}
           actionsCancelContent='Cancel'
           handleOffSetClick={handleOffSetClick}
       />

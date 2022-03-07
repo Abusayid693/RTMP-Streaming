@@ -1,6 +1,6 @@
 import _ from 'lodash';
 import React, { useEffect } from 'react';
-import { connect, useDispatch, useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router';
 import { useParams } from 'react-router-dom';
 import { editStream } from '../../actions';
@@ -11,7 +11,7 @@ type IParams = {
   id: string;
 };
 
-const StreamEdit = ({ editStream }: any) => {
+const StreamEdit = () => {
   const dispatch = useDispatch();
   const navigation = useNavigate();
   const { id } = useParams<IParams>() as any;
@@ -24,7 +24,7 @@ const StreamEdit = ({ editStream }: any) => {
   const selecteedStream = streams[id];
 
   const handleFormSubmit = async (formProps: any) => {
-    await editStream(id, formProps);
+    await dispatch(editStream(id, formProps));
     navigation('/');
   };
 
@@ -40,4 +40,4 @@ const StreamEdit = ({ editStream }: any) => {
   );
 };
 
-export default connect(null, { editStream })(StreamEdit);
+export default StreamEdit;
