@@ -1,15 +1,13 @@
 {
   "streams": [
     {
-      "title": "Testing stream",
-      "description": "we are creating new stream",
-      "userId": null,
+      "title": "YOU",
+      "description": "YOU",
       "id": 1
     },
     {
-      "title": "This is 2nd testing stream",
-      "description": "we are creating new stream",
-      "userId": "100879487765771195928",
+      "title": "me",
+      "description": "me",
       "id": 2
     },
     {
@@ -35,6 +33,11 @@
       "description": "then you",
       "userId": "100879487765771195928",
       "id": 6
+    },
+    {
+      "title": "R",
+      "description": "R",
+      "id": 7
     }
   ]
 }

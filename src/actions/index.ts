@@ -1,13 +1,13 @@
 import streams from '../apis/streams';
 import { IDispatch, IState } from '../store';
 import {
-    CREATE_STREAM,
-    DELETE_STREAM,
-    EDIT_STREAM,
-    FETCH_STREAM,
-    FETCH_STREMS,
-    SIGN_IN,
-    SIGN_OUT
+  CREATE_STREAM,
+  DELETE_STREAM,
+  EDIT_STREAM,
+  FETCH_STREAM,
+  FETCH_STREMS,
+  SIGN_IN,
+  SIGN_OUT
 } from './types';
 
 export const signIn = (id: string) => {
@@ -41,8 +41,9 @@ export const fetchStream = (id: any) => async (dispatch: IDispatch) => {
 };
 
 export const editStream =
-  (id: any, formData: any) => async (dispatch: IDispatch) => {
-    const response = await streams.put(`/streams/${id}`, formData);
+  (id: any, formData: any) => async (dispatch: IDispatch, getState: IState) => {
+    const {userId} = getState().auth;
+    const response = await streams.put(`/streams/${id}`, {...formData, userId});
     dispatch({type: EDIT_STREAM, payload: response.data});
   };
 

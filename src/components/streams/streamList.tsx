@@ -13,11 +13,15 @@ class StreamList extends React.Component<{
     this.props.fetchStreams();
   }
 
-  adminControls(id:number) {
+  adminControls(id: number) {
     return (
       <div className="right floated content">
-        <Link to={`/streams/edit/${id}`} className="ui button primary">Edit</Link>
-        <Link to={`/streams/delete/${id}`}  className="ui button negative">Delete</Link>
+        <Link to={`/streams/edit/${id}`} className="ui button primary">
+          Edit
+        </Link>
+        <Link to={`/streams/delete/${id}`} className="ui button negative">
+          Delete
+        </Link>
       </div>
     );
   }
@@ -26,7 +30,9 @@ class StreamList extends React.Component<{
     return this.props.data.map((item: any) => {
       return (
         <div className="item" key={item.id}>
-          {this.props.userId === item.userId && this.adminControls(item.id)}
+          {this.props.userId &&
+            this.props.userId === item.userId &&
+            this.adminControls(item.id)}
           <i className="large middle aligned icon camera" />
           <div className="content">
             {item.title}
