@@ -27,6 +27,9 @@ const StreamEdit = () => {
     flvPlayer.attachMediaElement(videoRef.current);
     flvPlayer.load();
     console.log(videoRef);
+    return () => {
+      flvPlayer.destroy();
+    };
   }, [videoRef]);
 
   const streams = useSelector((state: any) => state.stream);
@@ -39,10 +42,9 @@ const StreamEdit = () => {
         ref={videoRef}
         style={{width: '80%', border: '1px solid black'}}
         controls
-      ></video>
+        ></video>
       <h2>Title : {selecteedStream.title}</h2>
       <h2>Description : {selecteedStream.description}</h2>
-
     </>
   );
 };
