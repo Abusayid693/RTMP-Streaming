@@ -2,6 +2,7 @@ import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
 import { fetchStream } from '../../actions/index';
+import Model from '../../model';
 
 type IParams = {
   id: string;
@@ -18,8 +19,12 @@ const StreamDelete = (props: any) => {
   const selecteedStream = streams[id];
   console.log(selecteedStream);
 
-  return <div>StreamEdit </div>;
+  return (
+    <div>
+      StreamEdit
+      <Model />
+    </div>
+  );
 };
-
 
 export default StreamDelete;

@@ -16,7 +16,12 @@ const StreamCreate = ({createStream}: IStreamCreate) => {
     navigation('/');
   };
 
-  return <StreamForm onSubmit={handleFormSubmit} />;
+  return (
+    <>
+      <h1>Create Stream</h1>
+      <StreamForm onSubmit={handleFormSubmit} />
+    </>
+  );
 };
 
 export default connect(null, {createStream})(StreamCreate);

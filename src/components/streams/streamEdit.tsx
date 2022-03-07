@@ -1,3 +1,4 @@
+import _ from 'lodash';
 import React, { useEffect } from 'react';
 import { connect, useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router';
@@ -10,10 +11,10 @@ type IParams = {
   id: string;
 };
 
-const StreamEdit = ({editStream}: any) => {
+const StreamEdit = ({ editStream }: any) => {
   const dispatch = useDispatch();
   const navigation = useNavigate();
-  const {id} = useParams<IParams>() as any;
+  const { id } = useParams<IParams>() as any;
 
   useEffect(() => {
     dispatch(fetchStream(id));
@@ -29,10 +30,14 @@ const StreamEdit = ({editStream}: any) => {
 
   return (
     <>
-      <h1>{JSON.stringify(selecteedStream)}</h1>
-      <StreamForm onSubmit={handleFormSubmit} />
+      <h1>Edit Stream</h1>
+      <StreamForm
+        initialValues={_.pick(selecteedStream, 'title', 'description')
+        }
+        onSubmit={handleFormSubmit}
+      />
     </>
   );
 };
 
-export default connect(null, {editStream})(StreamEdit);
+export default connect(null, { editStream })(StreamEdit);
